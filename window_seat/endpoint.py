@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import File, UploadFile, FastAPI, Request, Response
+from fastapi import File, UploadFile, FastAPI, Request, Response, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
@@ -10,7 +10,8 @@ templates = Jinja2Templates(directory="templates")
 
 
 @app.post("/upload")
-async def upload(file: UploadFile = File(...)):
+async def upload(seat: str = Form(...), flight: str = Form(...), file: UploadFile = File(...)):
+
     try:
         contents = await file.read()
         # file_location = f"/tmp/window-seat/{file.filename}"
@@ -26,7 +27,7 @@ async def upload(file: UploadFile = File(...)):
     finally:
         await file.close()
 
-    return {"message": f"Successfuly uploaded {file.filename}"}
+    return {"message": f"Successfuly uploaded {file.filename}, seat: {seat}, flight: {flight}"}
 
 
 @app.get("/", response_class=HTMLResponse)
