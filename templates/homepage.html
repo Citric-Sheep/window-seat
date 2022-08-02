@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+<title>Window Seat</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="display-4">Upload your photo</h1>
+    <label for="myfile">Select a file:</label>
+    <form action="/upload" enctype="multipart/form-data" method="post">
+        <input name="files" type="file">
+        <input type="submit">
+    </form>
+</div>
+{% endblock %} 
