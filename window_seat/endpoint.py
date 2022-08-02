@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import File, UploadFile, FastAPI
 
-from window_seat.image_decoder import decode_image
+from window_seat.image_decoder import extract_created_from_filepath, extract_created_from_bytes
 
 app = FastAPI()
 
@@ -10,11 +10,14 @@ app = FastAPI()
 async def upload(file: UploadFile = File(...)):
     try:
         contents = await file.read()
-        image_metadata = decode_image(contents)
-        print("herer")
-
-        # with open(f"/tmp/window-seat/{file.filename}", 'wb') as f:
+        # file_location = f"/tmp/window-seat/{file.filename}"
+        # with open(file_location, 'wb') as f:
         #     f.write(contents)
+        # image_metadata = extract_created_from_filepath(file_location)
+
+        image_metadata = extract_created_from_bytes(contents)
+        print(f"Image created at {image_metadata}")
+
     except Exception:
         return {"message": "There was an error uploading the file"}
     finally:

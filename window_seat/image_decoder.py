@@ -1,36 +1,21 @@
 import io
+from datetime import datetime
 
-import whatimage
-import pyheif
 from PIL import Image
 
-
-import os
-import sys
-from PIL import Image
-from PIL.ExifTags import TAGS
-
-
-def decode_image(bytesIo):
-    # bites = io.BytesIO(bytesIo)
-    # bites.seek(0)
-    # image = Image.open(bites)
-    # print("therer")
-    #
-    # for (tag, value) in Image.open(bytesIo)._getexif().iteritems():
-    #     print('%s = %s' % (TAGS.get(tag), value))
+def _extract_meta(img) -> datetime:
+    metadata = img.getexif()
+    created = metadata[306]
+    dt = datetime.strptime(created, '%Y:%m:%d %H:%M:%S')
+    return dt
 
 
-    fmt = whatimage.identify_image(bytesIo)
-    if fmt in ['heic', 'avif']:
-        i = pyheif.read_heif(bytesIo)
+def extract_created_from_bytes(bytes_img):
+    img = Image.open(io.BytesIO(bytes_img))
+    return _extract_meta(img)
 
-        # Extract metadata etc
-        for metadata in i.metadata or []:
-            if metadata['type'] == 'Exif':
-                print(metadata)
-        # do whatever
-        s = io.BytesIO()
-        pi = Image.frombytes(mode=i.mode, size=i.size, data=i.data)
 
-        return i.metadata
+def extract_created_from_filepath(file_location: str):
+    img = Image.open(file_location)
+    return _extract_meta(img)
+
