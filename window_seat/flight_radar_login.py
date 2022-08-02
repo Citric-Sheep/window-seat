@@ -1,7 +1,7 @@
 from flightradar24.api import FlightRadar24API
 import json
 api = FlightRadar24API()
-result = api.login(user="dan.checketts@protonmail.ch", password="iY%U@bxHBZvYu&L6V45")
+# result = api.login(user="dan.checketts@protonmail.ch", password="iY%U@bxHBZvYu&L6V45")
 
 # flights = api.get_flights(flight="P57045")
 flights = api.get_flights(airline="RPB")
