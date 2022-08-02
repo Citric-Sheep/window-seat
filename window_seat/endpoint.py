@@ -8,7 +8,7 @@ app = FastAPI()
 async def upload(file: UploadFile = File(...)):
     try:
         contents = await file.read()
-        with open(file.filename, 'wb') as f:
+        with open(f"/tmp/window-seat/{file.filename}", 'wb') as f:
             f.write(contents)
     except Exception:
         return {"message": "There was an error uploading the file"}
