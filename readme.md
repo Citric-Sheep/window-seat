@@ -17,3 +17,14 @@ Extra for experts
 - Time zone information should be incorporated, generally peoples phones will be set to 
 the timezone they start with
 - Different planes will have different seat letters, row F on an A320 will be different from a 787
+
+## Setup requirements
+heif library requires some additional steps as it's a wrapper
+
+https://pypi.org/project/pyheif/
+
+### MacOS
+```
+brew install libffi libheif
+pip install git+https://github.com/carsales/pyheif.git
+```
