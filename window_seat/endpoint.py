@@ -10,7 +10,7 @@ templates = Jinja2Templates(directory="templates")
 
 
 @app.post("/upload")
-async def upload(file: UploadFile = File(...)):
+async def upload(file: UploadFile = File(...), seat: str = Request(...), flight: str = Request(...)):
     try:
         contents = await file.read()
         # file_location = f"/tmp/window-seat/{file.filename}"
